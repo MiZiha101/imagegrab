@@ -1,0 +1,136 @@
+/**
+ * 图提取 ImageGrab · 注入按钮样式
+ * 所有选择器都收在 #imagegrab-widget 下，避免污染电商页面原有样式。
+ */
+
+#imagegrab-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2147483000; /* 盖住页面大部分浮层，但不拦截页面原有操作 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.4;
+}
+
+#imagegrab-widget .ig-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2f6bff 0%, #6a5bff 55%, #7c4dff 100%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(47, 107, 255, 0.35), 0 2px 6px rgba(16, 24, 64, 0.18);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+  outline: none;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  white-space: nowrap;
+}
+
+#imagegrab-widget .ig-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(47, 107, 255, 0.42), 0 4px 10px rgba(16, 24, 64, 0.2);
+  filter: brightness(1.05);
+}
+
+#imagegrab-widget .ig-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(47, 107, 255, 0.32);
+}
+
+#imagegrab-widget .ig-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(47, 107, 255, 0.35), 0 10px 24px rgba(47, 107, 255, 0.35);
+}
+
+#imagegrab-widget .ig-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.95;
+}
+
+#imagegrab-widget .ig-btn__spinner {
+  display: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #fff;
+  animation: ig-spin 0.8s linear infinite;
+}
+
+#imagegrab-widget .ig-btn[data-state="scanning"] .ig-btn__spinner {
+  display: inline-block;
+}
+
+#imagegrab-widget .ig-btn[data-state="scanning"] .ig-btn__icon {
+  display: none;
+}
+
+#imagegrab-widget .ig-btn[data-state="done"] {
+  background: linear-gradient(135deg, #12b886 0%, #0ea5a4 100%);
+  box-shadow: 0 10px 24px rgba(18, 184, 134, 0.32), 0 2px 6px rgba(16, 24, 64, 0.16);
+}
+
+#imagegrab-widget .ig-status {
+  max-width: 280px;
+  padding: 9px 13px;
+  border-radius: 12px;
+  background: rgba(17, 24, 39, 0.92);
+  color: #f3f5f9;
+  font-size: 12.5px;
+  line-height: 1.5;
+  box-shadow: 0 8px 20px rgba(10, 14, 30, 0.28);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#imagegrab-widget .ig-status.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#imagegrab-widget .ig-status[data-kind="success"] {
+  background: rgba(12, 122, 90, 0.95);
+}
+
+#imagegrab-widget .ig-status[data-kind="warn"] {
+  background: rgba(176, 78, 12, 0.95);
+}
+
+@keyframes ig-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 小屏适配：按钮略小，避免挡住页面底部操作栏 */
+@media (max-width: 480px) {
+  #imagegrab-widget {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  #imagegrab-widget .ig-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  #imagegrab-widget .ig-status {
+    max-width: 220px;
+  }
+}

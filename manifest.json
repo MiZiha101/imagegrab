@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "图提取 ImageGrab",
+  "version": "1.0.0",
+  "description": "一键提取淘宝/天猫、京东、拼多多商家版商品详情页的所有图片，在新页面勾选后批量下载为 PNG。",
+  "minimum_chrome_version": "102",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.taobao.com/*",
+    "*://*.tmall.com/*",
+    "*://*.jd.com/*",
+    "*://*.pinduoduo.com/*",
+    "*://*.yangkeduo.com/*",
+    "*://*.alicdn.com/*",
+    "*://*.tbcdn.cn/*",
+    "*://*.taobaocdn.com/*",
+    "*://*.360buyimg.com/*",
+    "*://*.pddpic.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "图提取：打开图片画廊",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.taobao.com/*",
+        "*://*.tmall.com/*",
+        "*://*.jd.com/*",
+        "*://*.pinduoduo.com/*",
+        "*://*.yangkeduo.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
